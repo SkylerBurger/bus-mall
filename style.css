@@ -1,9 +1,10 @@
 @import url(reset.css);
 
-html {
+html, body {
     height: 100%;
     width: 100%;
     background: linear-gradient(rgb(202, 83, 83), rgb(57, 159, 218));
+    background-attachment: fixed;
 }
 
 header {
@@ -18,18 +19,22 @@ header h1 {
     text-align: center;
 }
 
-section {
+main {
     width: 960px;
     margin: auto;
     background-color: skyblue;
 }
 
-section h2 {
+#products {
+    height: 450px;
+}
+
+h2 {
     font-size: 36px;
     text-align: center;
 }
 
-li {
+#products li {
     display: block;
     float: left;
 }
@@ -39,12 +44,26 @@ img { /*edit photos manually later*/
     width: 300px;
     margin: 10px;
     box-sizing: border-box;
-    border: 1px solid black;
+    border: 2px solid black;
+    border-radius: 15px;
+    box-shadow: 2px 2px 3px grey;
 }
 
 h3 {
     font-size: 24px;
     text-align: center;
+}
+
+#results {
+    width: 240px;
+    margin: auto;
+}
+
+#results ul {
+    display: block;
+    margin-top: 15px;
+    list-style: square inside;
+    line-height: 1.2em;
 }
 
 footer {

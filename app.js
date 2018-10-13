@@ -35,7 +35,7 @@ Product.allProducts = [];
 //=============================
 
 var testHandler = function(event) {
-    console.log(event.target.id);
+    // Make sure you clicked on an image
     if (event.target.id === 'left' || event.target.id === 'center' || event.target.id === 'right') {
         // Increment counters
         totalRounds++;
@@ -76,6 +76,12 @@ var testHandler = function(event) {
         leftIndex = randomLeftIndex;
         centerIndex = randomCenterIndex;
         rightIndex = randomRightIndex;
+
+        // End test if 25 rounds have been completed
+        if (totalRounds >= 25) {
+            testZone.removeEventListener('click', testHandler);
+            renderResults();
+        }
     }
 }
 
@@ -107,6 +113,28 @@ var randomStart = function() {
     rightText.textContent = Product.allProducts[rightIndex].name;
 }
 
+var renderResults = function () {
+    var results = document.getElementById('results');
+    var h2El = document.createElement('h2');
+    h2El.textContent = 'Test Results:';
+    results.appendChild(h2El);
+    var ulEl = document.createElement('ul');
+    var liEl = document.createElement('li');
+
+    // Check all products for ones with likes
+    for(var i in Product.allProducts) {
+        if (Product.allProducts[i].likes > 0) {
+            liEl = document.createElement('li');
+            liEl.textContent += Product.allProducts[i].likes;
+            liEl.textContent += " votes for the ";
+            liEl.textContent += Product.allProducts[i].name;
+            ulEl.appendChild(liEl);
+        }
+    }
+
+    results.appendChild(ulEl);
+}
+
 //===============
 // Function Calls
 //===============
@@ -119,5 +147,17 @@ var breakfast = new Product('Breakfast', 'img/breakfast.jpg');
 var bubbleGum = new Product('Bubble Gum', 'img/bubblegum.jpg');
 var chair = new Product('Chair', 'img/chair.jpg');
 var cthulhu = new Product('Cthulhu', 'img/cthulhu.jpg');
+var dogDuck = new Product('Dog Duck', 'img/dog-duck.jpg');
+var dragon = new Product('Dragon', 'img/dragon.jpg');
+var pen = new Product('Pen', 'img/pen.jpg');
+var petSweep = new Product('Pet Sweep', 'img/pet-sweep.jpg');
+var scissors = new Product('Scissors', 'img/scissors.jpg');
+var shark = new Product('Shark', 'img/shark.jpg');
+var sweep = new Product('Sweep', 'img/sweep.png');
+var tauntaun = new Product('Tauntaun', 'img/tauntaun.jpg');
+var unicorn = new Product('Unicorn', 'img/unicorn.jpg');
+var usb = new Product('USB', 'img/usb.gif');
+var waterCan = new Product('Water Can', 'img/water-can.jpg');
+var wineGlass = new Product('Wine Glass', 'img/wine-glass.jpg');
 
 randomStart();
