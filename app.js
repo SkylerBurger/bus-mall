@@ -5,13 +5,13 @@
 //=================
 
 var leftImage = document.getElementById('left');
-var leftIndex = 0; //This is hardcoded for the initial image
+var leftIndex; //This is hardcoded for the initial image
 var leftText = document.getElementById('left-text');
 var centerImage = document.getElementById('center');
-var centerIndex = 1; //This is hardcoded for the initial image
+var centerIndex; //This is hardcoded for the initial image
 var centerText = document.getElementById('center-text');
 var rightImage = document.getElementById('right');
-var rightIndex = 2; //This is hardcoded for the initial image
+var rightIndex; //This is hardcoded for the initial image
 var rightText = document.getElementById('right-text');
 var totalRounds = 0;
 
@@ -82,6 +82,31 @@ var testHandler = function(event) {
 var testZone = document.getElementById('products');
 testZone.addEventListener('click', testHandler);
 
+//==========
+// Functions
+//==========
+
+var randomStart = function() {
+    // Left
+    leftIndex = Math.floor(Math.random() * Product.allProducts.length);
+    leftImage.src = Product.allProducts[leftIndex].image;
+    leftText.textContent = Product.allProducts[leftIndex].name;
+
+    // Center
+    do {
+        centerIndex = Math.floor(Math.random() * Product.allProducts.length);
+    } while (centerIndex === leftIndex)
+    centerImage.src = Product.allProducts[centerIndex].image;
+    centerText.textContent = Product.allProducts[centerIndex].name;
+
+    // Right
+    do {
+        rightIndex = Math.floor(Math.random() * Product.allProducts.length);
+    } while (rightIndex === leftIndex || rightIndex === centerIndex)
+    rightImage.src = Product.allProducts[rightIndex].image;
+    rightText.textContent = Product.allProducts[rightIndex].name;
+}
+
 //===============
 // Function Calls
 //===============
@@ -94,3 +119,5 @@ var breakfast = new Product('Breakfast', 'img/breakfast.jpg');
 var bubbleGum = new Product('Bubble Gum', 'img/bubblegum.jpg');
 var chair = new Product('Chair', 'img/chair.jpg');
 var cthulhu = new Product('Cthulhu', 'img/cthulhu.jpg');
+
+randomStart();
