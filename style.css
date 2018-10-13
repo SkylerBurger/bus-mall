@@ -22,7 +22,7 @@ header h1 {
 main {
     width: 960px;
     margin: auto;
-    background-color: skyblue;
+    background-color: rgba(135, 207, 235, 0.603);
 }
 
 #products {
@@ -55,7 +55,8 @@ h3 {
 }
 
 #results {
-    width: 240px;
+    width: 600px;
+    height: 600px;
     margin: auto;
 }
 
@@ -64,6 +65,11 @@ h3 {
     margin-top: 15px;
     list-style: square inside;
     line-height: 1.2em;
+}
+
+canvas {
+    /* height: 400px;
+    width: 400px; */
 }
 
 footer {

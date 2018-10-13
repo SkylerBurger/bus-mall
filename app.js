@@ -5,15 +5,17 @@
 //=================
 
 var leftImage = document.getElementById('left');
-var leftIndex; //This is hardcoded for the initial image
+var leftIndex;
 var leftText = document.getElementById('left-text');
 var centerImage = document.getElementById('center');
-var centerIndex; //This is hardcoded for the initial image
+var centerIndex;
 var centerText = document.getElementById('center-text');
 var rightImage = document.getElementById('right');
-var rightIndex; //This is hardcoded for the initial image
+var rightIndex;
 var rightText = document.getElementById('right-text');
 var totalRounds = 0;
+var productLabels = [];
+var productLikes = [];
 
 //==========================
 // Constructors & Prototypes
@@ -78,7 +80,7 @@ var testHandler = function(event) {
         rightIndex = randomRightIndex;
 
         // End test if 25 rounds have been completed
-        if (totalRounds >= 25) {
+        if (totalRounds >= 5) {
             testZone.removeEventListener('click', testHandler);
             renderResults();
         }
@@ -93,19 +95,41 @@ testZone.addEventListener('click', testHandler);
 //==========
 
 var randomStart = function() {
-    // Left
+    // Create Product objects
+    var bag = new Product('Bag', 'img/bag.jpg');
+    var banana = new Product('Banana', 'img/banana.jpg');
+    var bathroom = new Product('Bathroom', 'img/bathroom.jpg');
+    var boots = new Product('Boots', 'img/boots.jpg');
+    var breakfast = new Product('Breakfast', 'img/breakfast.jpg');
+    var bubbleGum = new Product('Bubble Gum', 'img/bubblegum.jpg');
+    var chair = new Product('Chair', 'img/chair.jpg');
+    var cthulhu = new Product('Cthulhu', 'img/cthulhu.jpg');
+    var dogDuck = new Product('Dog Duck', 'img/dog-duck.jpg');
+    var dragon = new Product('Dragon', 'img/dragon.jpg');
+    var pen = new Product('Pen', 'img/pen.jpg');
+    var petSweep = new Product('Pet Sweep', 'img/pet-sweep.jpg');
+    var scissors = new Product('Scissors', 'img/scissors.jpg');
+    var shark = new Product('Shark', 'img/shark.jpg');
+    var sweep = new Product('Sweep', 'img/sweep.png');
+    var tauntaun = new Product('Tauntaun', 'img/tauntaun.jpg');
+    var unicorn = new Product('Unicorn', 'img/unicorn.jpg');
+    var usb = new Product('USB', 'img/usb.gif');
+    var waterCan = new Product('Water Can', 'img/water-can.jpg');
+    var wineGlass = new Product('Wine Glass', 'img/wine-glass.jpg');
+    
+    // Select Left
     leftIndex = Math.floor(Math.random() * Product.allProducts.length);
     leftImage.src = Product.allProducts[leftIndex].image;
     leftText.textContent = Product.allProducts[leftIndex].name;
 
-    // Center
+    // Select Center
     do {
         centerIndex = Math.floor(Math.random() * Product.allProducts.length);
     } while (centerIndex === leftIndex)
     centerImage.src = Product.allProducts[centerIndex].image;
     centerText.textContent = Product.allProducts[centerIndex].name;
 
-    // Right
+    // Select Right
     do {
         rightIndex = Math.floor(Math.random() * Product.allProducts.length);
     } while (rightIndex === leftIndex || rightIndex === centerIndex)
@@ -114,50 +138,41 @@ var randomStart = function() {
 }
 
 var renderResults = function () {
-    var results = document.getElementById('results');
-    var h2El = document.createElement('h2');
-    h2El.textContent = 'Test Results:';
-    results.appendChild(h2El);
-    var ulEl = document.createElement('ul');
-    var liEl = document.createElement('li');
+    // Create heading
+    // var results = document.getElementById('results');
+    // results.textContent = 'Test Results:';
 
-    // Check all products for ones with likes
+    // Create label and data arrays
     for(var i in Product.allProducts) {
-        if (Product.allProducts[i].likes > 0) {
-            liEl = document.createElement('li');
-            liEl.textContent += Product.allProducts[i].likes;
-            liEl.textContent += " votes for the ";
-            liEl.textContent += Product.allProducts[i].name;
-            ulEl.appendChild(liEl);
-        }
+        productLabels.push(Product.allProducts[i].name);
+        productLikes.push(Product.allProducts[i].likes);
     }
 
-    results.appendChild(ulEl);
+    // Create Chart
+    var ctx = document.getElementById('myChart').getContext('2d');
+    console.log(ctx);
+    var data = {
+        labels: productLabels,
+        datasets: [{
+            label: "Product Likes",
+            backgroundColor: 'pink',
+            borderColor: 'black',
+            data: productLikes,
+        }] 
+    };
+    var chartOptions = {
+        responsive: true,
+    };
+    var chart = new Chart(ctx, {
+        type: 'bar', 
+        data: data, 
+        options: chartOptions
+    });
+
 }
 
 //===============
 // Function Calls
 //===============
-
-var bag = new Product('Bag', 'img/bag.jpg');
-var banana = new Product('Banana', 'img/banana.jpg');
-var bathroom = new Product('Bathroom', 'img/bathroom.jpg');
-var boots = new Product('Boots', 'img/boots.jpg');
-var breakfast = new Product('Breakfast', 'img/breakfast.jpg');
-var bubbleGum = new Product('Bubble Gum', 'img/bubblegum.jpg');
-var chair = new Product('Chair', 'img/chair.jpg');
-var cthulhu = new Product('Cthulhu', 'img/cthulhu.jpg');
-var dogDuck = new Product('Dog Duck', 'img/dog-duck.jpg');
-var dragon = new Product('Dragon', 'img/dragon.jpg');
-var pen = new Product('Pen', 'img/pen.jpg');
-var petSweep = new Product('Pet Sweep', 'img/pet-sweep.jpg');
-var scissors = new Product('Scissors', 'img/scissors.jpg');
-var shark = new Product('Shark', 'img/shark.jpg');
-var sweep = new Product('Sweep', 'img/sweep.png');
-var tauntaun = new Product('Tauntaun', 'img/tauntaun.jpg');
-var unicorn = new Product('Unicorn', 'img/unicorn.jpg');
-var usb = new Product('USB', 'img/usb.gif');
-var waterCan = new Product('Water Can', 'img/water-can.jpg');
-var wineGlass = new Product('Wine Glass', 'img/wine-glass.jpg');
 
 randomStart();
