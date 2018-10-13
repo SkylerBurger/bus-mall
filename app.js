@@ -16,6 +16,8 @@ var rightText = document.getElementById('right-text');
 var totalRounds = 0;
 var productLabels = [];
 var productLikes = [];
+var likeableProductLabels = [];
+var likeableProductLikes = [];
 
 //==========================
 // Constructors & Prototypes
@@ -80,7 +82,7 @@ var testHandler = function(event) {
         rightIndex = randomRightIndex;
 
         // End test if 25 rounds have been completed
-        if (totalRounds >= 5) {
+        if (totalRounds >= 25) {
             testZone.removeEventListener('click', testHandler);
             renderResults();
         }
@@ -146,12 +148,17 @@ var renderResults = function () {
     for(var i in Product.allProducts) {
         productLabels.push(Product.allProducts[i].name);
         productLikes.push(Product.allProducts[i].likes);
+
+        if(Product.allProducts[i].likes > 0) {
+            likeableProductLabels.push(Product.allProducts[i].name);
+            likeableProductLikes.push(Product.allProducts[i].likes);
+        }
     }
 
-    // Create Chart
-    var ctx = document.getElementById('myChart').getContext('2d');
-    console.log(ctx);
-    var data = {
+    // Create Bar Chart
+    Chart.defaults.global.defaultFontFamily = "'Josefin Slab', sans-serif";
+    var ctx = document.getElementById('myBarChart').getContext('2d');
+    var barData = {
         labels: productLabels,
         datasets: [{
             label: "Product Likes",
@@ -160,15 +167,41 @@ var renderResults = function () {
             data: productLikes,
         }] 
     };
-    var chartOptions = {
+    var barChartOptions = {
         responsive: true,
+        animation: {easing: 'easeInCirc'},
     };
     var chart = new Chart(ctx, {
         type: 'bar', 
-        data: data, 
-        options: chartOptions
+        data: barData, 
+        options: barChartOptions,
     });
 
+    // Create Pie Chart
+    var ctx2 = document.getElementById('myPieChart').getContext('2d');
+    var pieData = {
+        labels: likeableProductLabels,
+        datasets: [{
+            label: "Percent of All Likes",
+            backgroundColor: 'blue',
+            borderColor: 'black',
+            data: likeableProductLikes
+        }]
+    };
+    var pieChartOptions = {
+        responsive: true,
+        animation: {
+            easing: 'easeInCirc',
+        },
+    };
+    var pieChart = new Chart(ctx2, {
+        type: 'doughnut',
+        data: pieData,
+        options: pieChartOptions,
+    });
+
+    // Move browser down to chart
+    window.location.href = 'index.html#myBarChart';
 }
 
 //===============

@@ -1,4 +1,5 @@
 @import url(reset.css);
+@import url('https://fonts.googleapis.com/css?family=Josefin+Slab|Special+Elite');
 
 html, body {
     height: 100%;
@@ -15,6 +16,7 @@ header {
 }
 
 header h1 {
+    font-family: "Special Elite", fantasy;
     font-size: 48px;
     text-align: center;
 }
@@ -30,6 +32,7 @@ main {
 }
 
 h2 {
+    font-family: 'Special Elite', sans-serif;
     font-size: 36px;
     text-align: center;
 }
@@ -50,26 +53,9 @@ img { /*edit photos manually later*/
 }
 
 h3 {
+    font-family: 'Josefin Slab', sans-serif;
     font-size: 24px;
     text-align: center;
-}
-
-#results {
-    width: 600px;
-    height: 600px;
-    margin: auto;
-}
-
-#results ul {
-    display: block;
-    margin-top: 15px;
-    list-style: square inside;
-    line-height: 1.2em;
-}
-
-canvas {
-    /* height: 400px;
-    width: 400px; */
 }
 
 footer {
