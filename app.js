@@ -18,6 +18,7 @@ var productLabels = [];
 var productLikes = [];
 var likeableProductLabels = [];
 var likeableProductLikes = [];
+var colors = [];
 
 //==========================
 // Constructors & Prototypes
@@ -86,6 +87,7 @@ var testHandler = function(event) {
 
         // End test if 25 rounds have been completed
         if (totalRounds >= 25) {
+            pickColors();
             testZone.removeEventListener('click', testHandler);
             renderResults();
         }
@@ -147,6 +149,18 @@ var randomStart = function() {
     rightText.textContent = Product.allProducts[rightIndex].name;
 }
 
+var pickColors = function() {
+    colors = [];
+    // create 20 random rgb color statements in string format
+    for (var i = 0; i < 20; i++) {
+        var colorString = "rgb(";
+        colorString += Math.floor(Math.random() * 255 + 1) + ", ";
+        colorString += Math.floor(Math.random() * 255 + 1) + ", ";
+        colorString += Math.floor(Math.random() * 255 + 1) + ")";
+        colors.push(colorString);
+    }
+}
+
 var renderResults = function () {
     // Create heading
     // var results = document.getElementById('results');
@@ -165,12 +179,17 @@ var renderResults = function () {
 
     // Create Bar Chart
     Chart.defaults.global.defaultFontFamily = "'Josefin Slab', sans-serif";
+    Chart.scaleService.updateScaleDefaults('linear', {
+        ticks: {
+            min: 0
+        }
+    });
     var ctx = document.getElementById('myBarChart').getContext('2d');
     var barData = {
         labels: productLabels,
         datasets: [{
             label: "Product Likes",
-            backgroundColor: 'pink',
+            backgroundColor: colors,
             borderColor: 'black',
             data: productLikes,
         }] 
@@ -191,7 +210,7 @@ var renderResults = function () {
         labels: likeableProductLabels,
         datasets: [{
             label: "Percent of All Likes",
-            backgroundColor: 'blue',
+            backgroundColor: colors,
             borderColor: 'black',
             data: likeableProductLikes
         }]
