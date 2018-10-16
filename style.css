@@ -19,6 +19,7 @@ header h1 {
     font-family: "Special Elite", fantasy;
     font-size: 48px;
     text-align: center;
+    padding-top: 30px;
 }
 
 main {
@@ -35,6 +36,7 @@ h2 {
     font-family: 'Special Elite', sans-serif;
     font-size: 36px;
     text-align: center;
+    padding: 30px;
 }
 
 #products li {
@@ -56,6 +58,20 @@ h3 {
     font-family: 'Josefin Slab', sans-serif;
     font-size: 24px;
     text-align: center;
+}
+
+#results {
+    display: none;
+    padding: 10px 0;
+}
+
+#results button {
+    display: block;
+    margin: 15px auto ;
+    height: 60px;
+    width: 180px;
+    font-family: 'Joesfin Slab', sans-serif;
+    font-size: 18px;
 }
 
 footer {

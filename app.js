@@ -101,7 +101,15 @@ testZone.addEventListener('click', testHandler);
 // Functions
 //==========
 
-var randomStart = function() {
+var reStartUp = function() {
+    console.log('button clicked');
+    window.location.reload();
+}
+
+var startUp = function() {
+
+    var testZone = document.getElementById('products');
+    testZone.addEventListener('click', testHandler);
 
     if (!localStorage.getItem('productArray')) {
         // Create Product objects
@@ -162,9 +170,15 @@ var pickColors = function() {
 }
 
 var renderResults = function () {
-    // Create heading
-    // var results = document.getElementById('results');
-    // results.textContent = 'Test Results:';
+    // Clear Images
+    while(testZone.firstChild) {
+        testZone.removeChild(testZone.firstChild);
+        testZone.style.height = 0;
+    }
+
+    // Reveal results Section element
+    var resultsSection = document.getElementById('results');
+    resultsSection.style.display = 'block';
 
     // Create label and data arrays
     for(var i in Product.allProducts) {
@@ -227,6 +241,10 @@ var renderResults = function () {
         options: pieChartOptions,
     });
 
+    // Create Reset Buttom
+    var buttonEl = document.getElementById('reset-button');
+    buttonEl.addEventListener('click', reStartUp);
+
     // Move browser down to chart
     window.location.href = 'index.html#myBarChart';
 }
@@ -235,4 +253,4 @@ var renderResults = function () {
 // Function Calls
 //===============
 
-randomStart();
+startUp();
