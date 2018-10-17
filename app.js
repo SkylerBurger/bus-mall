@@ -1,4 +1,4 @@
-"use strict"
+'use strict';
 
 //=================
 // Global Variables
@@ -18,19 +18,20 @@ var productLabels = [];
 var productLikes = [];
 var likeableProductLabels = [];
 var likeableProductLikes = [];
+var colors = [];
 
 //==========================
 // Constructors & Prototypes
 //==========================
 
 var Product = function(name, imageLocation) {
-    this.name = name;
-    this.image = imageLocation;
-    this.appearances = 0;
-    this.likes = 0;
-    this.index = Product.allProducts.length;
-    Product.allProducts.push(this);
-}
+  this.name = name;
+  this.image = imageLocation;
+  this.appearances = 0;
+  this.likes = 0;
+  this.index = Product.allProducts.length;
+  Product.allProducts.push(this);
+};
 
 Product.allProducts = [];
 
@@ -39,55 +40,59 @@ Product.allProducts = [];
 //=============================
 
 var testHandler = function(event) {
-    // Make sure you clicked on an image
-    if (event.target.id === 'left' || event.target.id === 'center' || event.target.id === 'right') {
-        // Increment counters
-        totalRounds++;
-        Product.allProducts[leftIndex].appearances++;
-        Product.allProducts[centerIndex].appearances++;
-        Product.allProducts[rightIndex].appearances++;
-        if (event.target.id === 'left') {
-            Product.allProducts[leftIndex].likes++;
-        } else if (event.target.id === 'center') {
-            Product.allProducts[centerIndex].likes++;
-        } else {
-            Product.allProducts[rightIndex].likes++;
-        }
-
-        // Get random number for left image
-        do {
-            var randomLeftIndex = Math.floor(Math.random() * Product.allProducts.length);
-        } while (randomLeftIndex === leftIndex || randomLeftIndex === centerIndex || randomLeftIndex === rightIndex)
-        leftImage.src = Product.allProducts[randomLeftIndex].image;
-        leftText.textContent = Product.allProducts[randomLeftIndex].name;
-        
-        // Get random number for center image
-        do {
-            var randomCenterIndex = Math.floor(Math.random() * Product.allProducts.length);
-        }while (randomCenterIndex === leftIndex || randomCenterIndex === randomLeftIndex || randomCenterIndex === centerIndex || randomCenterIndex === rightIndex)
-        centerImage.src = Product.allProducts[randomCenterIndex].image;
-        centerText.textContent = Product.allProducts[randomCenterIndex
-        ].name;
-
-        // Get random number for right image
-        do {
-            var randomRightIndex = Math.floor(Math.random() * Product.allProducts.length);
-        } while ( randomRightIndex === leftIndex || randomRightIndex === randomLeftIndex || randomRightIndex === centerIndex || randomRightIndex === randomCenterIndex || randomRightIndex === rightIndex)
-        rightImage.src = Product.allProducts[randomRightIndex].image;
-        rightText.textContent = Product.allProducts[randomRightIndex].name;
-
-        // Update all indices
-        leftIndex = randomLeftIndex;
-        centerIndex = randomCenterIndex;
-        rightIndex = randomRightIndex;
-
-        // End test if 25 rounds have been completed
-        if (totalRounds >= 25) {
-            testZone.removeEventListener('click', testHandler);
-            renderResults();
-        }
+  // Make sure you clicked on an image
+  if (event.target.id === 'left' || event.target.id === 'center' || event.target.id === 'right') {
+    // Increment counters
+    totalRounds++;
+    Product.allProducts[leftIndex].appearances++;
+    Product.allProducts[centerIndex].appearances++;
+    Product.allProducts[rightIndex].appearances++;
+    if (event.target.id === 'left') {
+      Product.allProducts[leftIndex].likes++;
+    } else if (event.target.id === 'center') {
+      Product.allProducts[centerIndex].likes++;
+    } else {
+      Product.allProducts[rightIndex].likes++;
     }
-}
+
+    // Get random number for left image
+    do {
+      var randomLeftIndex = Math.floor(Math.random() * Product.allProducts.length);
+    } while (randomLeftIndex === leftIndex || randomLeftIndex === centerIndex || randomLeftIndex === rightIndex);
+    leftImage.src = Product.allProducts[randomLeftIndex].image;
+    leftText.textContent = Product.allProducts[randomLeftIndex].name;
+
+    // Get random number for center image
+    do {
+      var randomCenterIndex = Math.floor(Math.random() * Product.allProducts.length);
+    }while (randomCenterIndex === leftIndex || randomCenterIndex === randomLeftIndex || randomCenterIndex === centerIndex || randomCenterIndex === rightIndex);
+    centerImage.src = Product.allProducts[randomCenterIndex].image;
+    centerText.textContent = Product.allProducts[randomCenterIndex
+    ].name;
+
+    // Get random number for right image
+    do {
+      var randomRightIndex = Math.floor(Math.random() * Product.allProducts.length);
+    } while ( randomRightIndex === leftIndex || randomRightIndex === randomLeftIndex || randomRightIndex === centerIndex || randomRightIndex === randomCenterIndex || randomRightIndex === rightIndex);
+    rightImage.src = Product.allProducts[randomRightIndex].image;
+    rightText.textContent = Product.allProducts[randomRightIndex].name;
+
+    // Update all indices
+    leftIndex = randomLeftIndex;
+    centerIndex = randomCenterIndex;
+    rightIndex = randomRightIndex;
+
+    // Save results to local storage
+    localStorage.setItem('productArray', JSON.stringify(Product.allProducts));
+
+    // End test if 25 rounds have been completed
+    if (totalRounds >= 25) {
+      pickGraphColors();
+      testZone.removeEventListener('click', testHandler);
+      renderResults();
+    }
+  }
+};
 
 var testZone = document.getElementById('products');
 testZone.addEventListener('click', testHandler);
@@ -96,7 +101,12 @@ testZone.addEventListener('click', testHandler);
 // Functions
 //==========
 
-var randomStart = function() {
+var startUp = function() {
+
+  var testZone = document.getElementById('products');
+  testZone.addEventListener('click', testHandler);
+
+  if (!localStorage.getItem('productArray')) {
     // Create Product objects
     var bag = new Product('Bag', 'img/bag.jpg');
     var banana = new Product('Banana', 'img/banana.jpg');
@@ -118,94 +128,133 @@ var randomStart = function() {
     var usb = new Product('USB', 'img/usb.gif');
     var waterCan = new Product('Water Can', 'img/water-can.jpg');
     var wineGlass = new Product('Wine Glass', 'img/wine-glass.jpg');
-    
-    // Select Left
-    leftIndex = Math.floor(Math.random() * Product.allProducts.length);
-    leftImage.src = Product.allProducts[leftIndex].image;
-    leftText.textContent = Product.allProducts[leftIndex].name;
+  } else {
+    Product.allProducts = JSON.parse(localStorage.getItem('productArray'));
+  }
 
-    // Select Center
-    do {
-        centerIndex = Math.floor(Math.random() * Product.allProducts.length);
-    } while (centerIndex === leftIndex)
-    centerImage.src = Product.allProducts[centerIndex].image;
-    centerText.textContent = Product.allProducts[centerIndex].name;
+  // Select Left
+  leftIndex = Math.floor(Math.random() * Product.allProducts.length);
+  leftImage.src = Product.allProducts[leftIndex].image;
+  leftText.textContent = Product.allProducts[leftIndex].name;
 
-    // Select Right
-    do {
-        rightIndex = Math.floor(Math.random() * Product.allProducts.length);
-    } while (rightIndex === leftIndex || rightIndex === centerIndex)
-    rightImage.src = Product.allProducts[rightIndex].image;
-    rightText.textContent = Product.allProducts[rightIndex].name;
-}
+  // Select Center
+  do {
+    centerIndex = Math.floor(Math.random() * Product.allProducts.length);
+  } while (centerIndex === leftIndex);
+  centerImage.src = Product.allProducts[centerIndex].image;
+  centerText.textContent = Product.allProducts[centerIndex].name;
+
+  // Select Right
+  do {
+    rightIndex = Math.floor(Math.random() * Product.allProducts.length);
+  } while (rightIndex === leftIndex || rightIndex === centerIndex);
+  rightImage.src = Product.allProducts[rightIndex].image;
+  rightText.textContent = Product.allProducts[rightIndex].name;
+};
+
+var reStartUp = function() {
+  window.location.reload();
+};
+
+var pickSingleColor = function() {
+  var colorString = 'rgb(';
+  colorString += Math.floor(Math.random() * 255 + 1) + ', ';
+  colorString += Math.floor(Math.random() * 255 + 1) + ', ';
+  colorString += Math.floor(Math.random() * 255 + 1) + ')';
+  return colorString;
+};
+
+var pickGraphColors = function() {
+  colors = [];
+  // create 20 random rgb color statements in string format
+  for (var i = 0; i < 20; i++) {
+    colors.push(pickSingleColor());
+  }
+};
 
 var renderResults = function () {
-    // Create heading
-    // var results = document.getElementById('results');
-    // results.textContent = 'Test Results:';
+  // Clear Images
+  while(testZone.firstChild) {
+    testZone.removeChild(testZone.firstChild);
+    testZone.style.height = 0;
+  }
 
-    // Create label and data arrays
-    for(var i in Product.allProducts) {
-        productLabels.push(Product.allProducts[i].name);
-        productLikes.push(Product.allProducts[i].likes);
+  // Reveal results Section element
+  var resultsSection = document.getElementById('results');
+  resultsSection.style.display = 'block';
 
-        if(Product.allProducts[i].likes > 0) {
-            likeableProductLabels.push(Product.allProducts[i].name);
-            likeableProductLikes.push(Product.allProducts[i].likes);
-        }
+  // Create label and data arrays
+  for(var i in Product.allProducts) {
+    productLabels.push(Product.allProducts[i].name);
+    productLikes.push(Product.allProducts[i].likes);
+
+    if(Product.allProducts[i].likes > 0) {
+      likeableProductLabels.push(Product.allProducts[i].name);
+      likeableProductLikes.push(Product.allProducts[i].likes);
     }
+  }
 
-    // Create Bar Chart
-    Chart.defaults.global.defaultFontFamily = "'Josefin Slab', sans-serif";
-    var ctx = document.getElementById('myBarChart').getContext('2d');
-    var barData = {
-        labels: productLabels,
-        datasets: [{
-            label: "Product Likes",
-            backgroundColor: 'pink',
-            borderColor: 'black',
-            data: productLikes,
-        }] 
-    };
-    var barChartOptions = {
-        responsive: true,
-        animation: {easing: 'easeInCirc'},
-    };
-    var chart = new Chart(ctx, {
-        type: 'bar', 
-        data: barData, 
-        options: barChartOptions,
-    });
+  // Create Bar Chart
+  Chart.defaults.global.defaultFontFamily = '\'Josefin Slab\', sans-serif';
+  // Starts ticks at 0
+  Chart.scaleService.updateScaleDefaults('linear', {
+    ticks: {
+      min: 0
+    }
+  });
+  var ctx = document.getElementById('myBarChart').getContext('2d');
+  var barData = {
+    labels: productLabels,
+    datasets: [{
+      label: 'Product Likes',
+      backgroundColor: colors,
+      borderColor: 'black',
+      data: productLikes,
+    }]
+  };
+  var barChartOptions = {
+    responsive: true,
+    animation: {easing: 'easeInCirc'},
+  };
+  var chart = new Chart(ctx, {
+    type: 'bar',
+    data: barData,
+    options: barChartOptions,
+  });
 
-    // Create Pie Chart
-    var ctx2 = document.getElementById('myPieChart').getContext('2d');
-    var pieData = {
-        labels: likeableProductLabels,
-        datasets: [{
-            label: "Percent of All Likes",
-            backgroundColor: 'blue',
-            borderColor: 'black',
-            data: likeableProductLikes
-        }]
-    };
-    var pieChartOptions = {
-        responsive: true,
-        animation: {
-            easing: 'easeInCirc',
-        },
-    };
-    var pieChart = new Chart(ctx2, {
-        type: 'doughnut',
-        data: pieData,
-        options: pieChartOptions,
-    });
+  // Create Pie Chart
+  var ctx2 = document.getElementById('myPieChart').getContext('2d');
+  var pieData = {
+    labels: likeableProductLabels,
+    datasets: [{
+      label: 'Percent of All Likes',
+      backgroundColor: colors,
+      borderColor: 'black',
+      data: likeableProductLikes
+    }]
+  };
+  var pieChartOptions = {
+    responsive: true,
+    animation: {
+      easing: 'easeInCirc',
+    },
+  };
+  var pieChart = new Chart(ctx2, {
+    type: 'doughnut',
+    data: pieData,
+    options: pieChartOptions,
+  });
 
-    // Move browser down to chart
-    window.location.href = 'index.html#myBarChart';
-}
+  // Create Reset Buttom
+  var buttonEl = document.getElementById('reset-button');
+  buttonEl.addEventListener('click', reStartUp);
+
+  // Move browser down to chart
+  window.location.href = 'index.html#myBarChart';
+};
 
 //===============
 // Function Calls
 //===============
 
-randomStart();
+startUp();
