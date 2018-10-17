@@ -4,15 +4,21 @@
 html, body {
     height: 100%;
     width: 100%;
-    background: linear-gradient(rgb(202, 83, 83), rgb(57, 159, 218));
+    /* background: linear-gradient(rgb(202, 83, 83), rgb(57, 159, 218)); */
+    background: 
+        url('https://images.freecreatives.com/wp-content/uploads/2016/02/Rough-Vintage-Blossom-Free-Texture.jpg'),
+        linear-gradient(rgba(27, 224, 231, 0.7), rgba(244, 255, 183, 0.7))
+    ;
+    background-blend-mode: multiply;
     background-attachment: fixed;
 }
 
 header {
     width: 960px;
     height: 120px;
-    margin: auto;
-    background-color: gray;
+    margin: 10px auto;
+    background-color: rgba(63, 63, 63, 0.657);
+    border-radius: 5px;
 }
 
 header h1 {
@@ -24,8 +30,9 @@ header h1 {
 
 main {
     width: 960px;
-    margin: auto;
+    margin: 10px auto;
     background-color: rgba(135, 207, 235, 0.603);
+    border-radius: 5px;
 }
 
 #products {
@@ -77,6 +84,7 @@ h3 {
 footer {
     width: 960px;
     height: 60px;
-    margin: auto;
-    background-color: gray;
+    margin: 10px auto;
+    background-color: rgba(63, 63, 63, 0.657);
+    border-radius: 5px;
 }
