@@ -39,6 +39,14 @@ Product.allProducts = [];
 // Event Listeners and Handlers
 //=============================
 
+var clearEl = document.getElementById('clear-button');
+clearEl.addEventListener('click',
+  function() {
+    localStorage.clear();
+    console.log('Button!');
+  }
+);
+
 var testHandler = function(event) {
   // Make sure you clicked on an image
   if (event.target.id === 'left' || event.target.id === 'center' || event.target.id === 'right') {
@@ -153,7 +161,7 @@ var startUp = function() {
 };
 
 var reStartUp = function() {
-  window.location.reload();
+  location.reload();
 };
 
 var pickSingleColor = function() {
@@ -245,9 +253,9 @@ var renderResults = function () {
     options: pieChartOptions,
   });
 
-  // Create Reset Buttom
-  var buttonEl = document.getElementById('reset-button');
-  buttonEl.addEventListener('click', reStartUp);
+  // Create Retake and Clear Buttom
+  var retakeEl = document.getElementById('retake-button');
+  retakeEl.addEventListener('click', reStartUp);
 
   // Move browser down to chart
   window.location.href = 'index.html#myBarChart';
