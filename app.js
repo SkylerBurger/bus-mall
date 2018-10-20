@@ -43,7 +43,7 @@ var clearEl = document.getElementById('clear-button');
 clearEl.addEventListener('click',
   function() {
     localStorage.clear();
-    console.log('Button!');
+    totalRounds = 0;
   }
 );
 
@@ -210,6 +210,8 @@ var renderResults = function () {
       min: 0
     }
   });
+  Chart.defaults.global.defaultFontColor = 'black';
+  Chart.defaults.global.defaultFontSize = 18;
   var ctx = document.getElementById('myBarChart').getContext('2d');
   var barData = {
     labels: productLabels,
