@@ -1,15 +1,13 @@
 @import url(reset.css);
-@import url('https://fonts.googleapis.com/css?family=Josefin+Slab|Special+Elite');
+@import url('https://fonts.googleapis.com/css?family=Josefin+Slab|Amatic+SC');
 
 html, body {
     height: 100%;
     width: 100%;
     /* background: linear-gradient(rgb(202, 83, 83), rgb(57, 159, 218)); */
     background: 
-        url('https://images.freecreatives.com/wp-content/uploads/2016/02/Rough-Vintage-Blossom-Free-Texture.jpg'),
-        linear-gradient(rgba(27, 224, 231, 0.7), rgba(244, 255, 183, 0.7))
+        url('https://images.freecreatives.com/wp-content/uploads/2016/02/Rough-Vintage-Blossom-Free-Texture.jpg')
     ;
-    background-blend-mode: multiply;
     background-attachment: fixed;
 }
 
@@ -22,16 +20,19 @@ header {
 }
 
 header h1 {
-    font-family: "Special Elite", fantasy;
+    font-family: "Amatic SC", fantasy;
     font-size: 48px;
+    font-weight: bold;
     text-align: center;
+    text-shadow: 1px 1px 2px white;
+    color: rgb(133, 228, 204);
     padding-top: 30px;
 }
 
 main {
     width: 960px;
     margin: 10px auto;
-    background-color: rgba(135, 207, 235, 0.603);
+    background-color: rgba(100, 139, 128, .75);
     border-radius: 5px;
 }
 
@@ -40,7 +41,8 @@ main {
 }
 
 h2 {
-    font-family: 'Special Elite', sans-serif;
+    font-family: 'Amatic SC', sans-serif;
+    font-weight: bold;
     font-size: 36px;
     text-align: center;
     padding: 30px;
@@ -65,6 +67,7 @@ h3 {
     font-family: 'Josefin Slab', sans-serif;
     font-size: 24px;
     text-align: center;
+    font-weight: bold;
 }
 
 #results {
@@ -79,12 +82,29 @@ h3 {
     width: 180px;
     font-family: 'Joesfin Slab', sans-serif;
     font-size: 18px;
+    border: none;
+    border-radius: 5px;
+    background-color: rgba(49, 223, 121, 0.7);
 }
 
 footer {
     width: 960px;
     height: 60px;
     margin: 10px auto;
+    padding: 10px;
     background-color: rgba(63, 63, 63, 0.657);
+    border-radius: 5px;
+}
+
+#clear-button {
+    display: block;
+    float: right;
+    margin-top: 10px;
+    height: 40px;
+    width: 180px;
+    font-family: 'Joesfin Slab', sans-serif;
+    font-size: 18px;
+    background-color: rgba(255, 86, 86, 0.452);
+    border: none;
     border-radius: 5px;
 }
